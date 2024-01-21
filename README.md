@@ -9,3 +9,5 @@ _-	Gestion de classes, de services et de repository._
 _-	Relations entre les tables, clés étrangères, clés composites_
 
 _- Intégration de l'API et tests de fonctionnement_
+
+_- Début de l'implémentation du CRUD_
