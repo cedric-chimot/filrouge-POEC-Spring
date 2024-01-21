@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class CentreFormationController {
 
     /**
-     * Appel le service du centre de formation
+     * Appelle le service du centre de formation
      */
     private final CentreFormationService centreFormationService;
 

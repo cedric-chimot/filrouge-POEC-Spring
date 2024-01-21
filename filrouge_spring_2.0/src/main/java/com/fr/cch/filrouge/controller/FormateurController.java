@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class FormateurController {
 
     /**
-     * Appel le service du formateur
+     * Appelle le service du formateur
      */
     public final FormateurService formateurService;
 
