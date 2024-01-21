@@ -1,7 +1,7 @@
 package com.fr.cch.filrouge.controller;
 
 import com.fr.cch.filrouge.entity.CentreFormation;
-import com.fr.cch.filrouge.services.CentreFormationService;
+import com.fr.cch.filrouge.services.impl.CentreFormationServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,14 +18,14 @@ public class CentreFormationController {
     /**
      * Appelle le service du centre de formation
      */
-    private final CentreFormationService centreFormationService;
+    private final CentreFormationServiceImpl centreFormationService;
 
     /**
      * Constructeur du controller centre de formation
      * @param centreFormationService, le service centre de formation
      */
     @Autowired
-    public CentreFormationController(CentreFormationService centreFormationService) {
+    public CentreFormationController(CentreFormationServiceImpl centreFormationService) {
         this.centreFormationService = centreFormationService;
     }
 
@@ -36,7 +36,7 @@ public class CentreFormationController {
      */
     @PostMapping("/create")
     public CentreFormation createCentre(@RequestBody CentreFormation centreFormation) {
-        return centreFormationService.createCentre(centreFormation);
+        return centreFormationService.create(centreFormation);
     }
 
 }

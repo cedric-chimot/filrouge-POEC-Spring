@@ -20,7 +20,7 @@ public class SessionFormation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "idSession")
-    private Long idSession;
+    private Long id;
 
     @Column(name = "date_debut", nullable = false)
     //@Temporal : Pour spécifier si un champ de type "Date" doit être mappé en tant que date
@@ -68,7 +68,7 @@ public class SessionFormation {
     @Override
     public String toString() {
         return "SessionFormation{" +
-                "idSession=" + idSession +
+                "idSession=" + id +
                 ", dateDebut=" + dateDebut +
                 ", dateFin=" + dateFin +
                 ", statut='" + statut + '\'' +

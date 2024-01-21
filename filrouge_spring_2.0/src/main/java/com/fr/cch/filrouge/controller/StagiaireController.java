@@ -1,7 +1,7 @@
 package com.fr.cch.filrouge.controller;
 
 import com.fr.cch.filrouge.entity.Stagiaire;
-import com.fr.cch.filrouge.services.StagiaireService;
+import com.fr.cch.filrouge.services.impl.StagiaireServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +18,15 @@ public class StagiaireController {
     /**
      * Appelle le service Stagiaires
      */
-    public final StagiaireService stagiaireService;
+    public final StagiaireServiceImpl stagiaireServiceImpl;
 
     /**
      * Constructeur
-     * @param stagiaireService le service Stagiaires
+     * @param stagiaireServiceImpl le service Stagiaires
      */
     @Autowired
-    public StagiaireController(StagiaireService stagiaireService) {
-        this.stagiaireService = stagiaireService;
+    public StagiaireController(StagiaireServiceImpl stagiaireServiceImpl) {
+        this.stagiaireServiceImpl = stagiaireServiceImpl;
     }
 
     /**
@@ -36,7 +36,7 @@ public class StagiaireController {
      */
     @PostMapping("/create")
     public Stagiaire createStagiaire(@RequestBody Stagiaire stagiaire) {
-        return stagiaireService.createStagiaire(stagiaire);
+        return stagiaireServiceImpl.create(stagiaire);
     }
 
 }

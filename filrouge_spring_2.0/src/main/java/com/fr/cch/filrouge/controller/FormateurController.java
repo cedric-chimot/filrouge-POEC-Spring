@@ -1,7 +1,7 @@
 package com.fr.cch.filrouge.controller;
 
 import com.fr.cch.filrouge.entity.Formateur;
-import com.fr.cch.filrouge.services.FormateurService;
+import com.fr.cch.filrouge.services.impl.FormateurServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,15 +18,15 @@ public class FormateurController {
     /**
      * Appelle le service du formateur
      */
-    public final FormateurService formateurService;
+    public final FormateurServiceImpl formateurServiceImpl;
 
     /**
      * Constructeur
-     * @param formateurService retourne le service formateur
+     * @param formateurServiceImpl retourne le service formateur
      */
     @Autowired
-    public FormateurController(FormateurService formateurService) {
-        this.formateurService = formateurService;
+    public FormateurController(FormateurServiceImpl formateurServiceImpl) {
+        this.formateurServiceImpl = formateurServiceImpl;
     }
 
     /**
@@ -36,7 +36,7 @@ public class FormateurController {
      */
     @PostMapping("/create")
     public Formateur createFormateur(@RequestBody Formateur formateur) {
-        return formateurService.createFormateur(formateur);
+        return formateurServiceImpl.create(formateur);
     }
 
 }

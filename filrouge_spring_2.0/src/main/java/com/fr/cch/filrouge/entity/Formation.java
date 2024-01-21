@@ -19,7 +19,7 @@ public class Formation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "idFormations")
-    private Long idFormation;
+    private Long id;
 
     @Column(name = "nomFormation", nullable = false)
     private String nom;
@@ -55,7 +55,7 @@ public class Formation {
     @Override
     public String toString() {
         return "Formations{" +
-                "idFormation=" + idFormation +
+                "idFormation=" + id +
                 ", nom='" + nom + '\'' +
                 ", prix=" + prix +
                 ", description='" + description + '\'' +

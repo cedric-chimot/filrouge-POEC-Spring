@@ -19,7 +19,7 @@ public class CentreFormation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "idCentre")
-    private Long idCentre;
+    private Long id;
 
     @Column(name = "nomCentre", nullable = false)
     private String nom;
@@ -47,7 +47,7 @@ public class CentreFormation {
     @Override
     public String toString() {
         return "CentreFormation{" +
-                "idCentre=" + idCentre +
+                "idCentre=" + id +
                 ", nom='" + nom + '\'' +
                 ", adresse='" + adresse + '\'' +
                 '}';

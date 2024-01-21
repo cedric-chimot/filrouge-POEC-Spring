@@ -23,7 +23,7 @@ public class Theme {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @JoinColumn(name = "idTheme")
-    private Long idTheme;
+    private Long id;
 
     @Column(name = "nomTheme", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -53,7 +53,7 @@ public class Theme {
     @Override
     public String toString() {
         return "Themes{" +
-                "idTheme=" + idTheme +
+                "idTheme=" + id +
                 ", nom='" + theme + '\'' +
                 ", sousTheme=" + sousTheme +
                 '}';
