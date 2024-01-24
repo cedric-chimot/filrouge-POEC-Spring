@@ -3,6 +3,7 @@ package com.fr.cch.filrouge.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -42,8 +43,8 @@ public class SessionFormation {
     @JoinColumn(name = "centre_formation_id", nullable = true)
     private CentreFormation centreFormation;
 
-    @OneToMany(mappedBy = "session")
-    private List<Participation> participations;
+    @OneToMany(mappedBy = "session", fetch = FetchType.EAGER)
+    private List<Participation> participations = new ArrayList<>();
 
     /**
      * Constructeur pour une session de formation

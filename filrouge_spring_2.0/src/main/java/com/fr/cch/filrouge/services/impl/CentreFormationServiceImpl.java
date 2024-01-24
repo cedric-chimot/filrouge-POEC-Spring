@@ -9,6 +9,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service pour implémenter les méthodes du CRUD pour un centre de formation
+ */
 @Service
 @Transactional
 public class CentreFormationServiceImpl implements AllServices<CentreFormation, Long> {
@@ -19,7 +22,7 @@ public class CentreFormationServiceImpl implements AllServices<CentreFormation, 
     private final CentreFormationRepository centreFormationRepository;
 
     /**
-     * Le constructeur
+     * Le constructeur du service
      * @param centreFormationRepository le repository correspondant
      */
     public CentreFormationServiceImpl(CentreFormationRepository centreFormationRepository) {

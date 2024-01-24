@@ -5,18 +5,26 @@ import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.repository.FormationRepository;
 import com.fr.cch.filrouge.services.AllServices;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service pour implémenter les méthodes du CRUD pour une session de formation
+ */
 @Service
 @Transactional
 public class FormationServiceImpl implements AllServices<Formation, Long> {
 
+    /**
+     * Le repository Formation
+     */
     private final FormationRepository formationRepository;
 
-    @Autowired
+    /**
+     * Le constructeur du service
+     * @param formationRepository le repository correspondant
+     */
     public FormationServiceImpl(FormationRepository formationRepository) {
         this.formationRepository = formationRepository;
     }

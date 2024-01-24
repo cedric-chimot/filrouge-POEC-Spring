@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -33,8 +34,8 @@ public class Theme {
     @JoinColumn(name = "idSousTheme")
     private SousTheme sousTheme;
 
-    @OneToMany(mappedBy = "theme")
-    private List<DomaineTheme> domaineThemes;
+    @OneToMany(mappedBy = "theme", fetch = FetchType.EAGER)
+    private List<DomaineTheme> domaineThemes = new ArrayList<>();
 
     /**
      * Constructeur du thème

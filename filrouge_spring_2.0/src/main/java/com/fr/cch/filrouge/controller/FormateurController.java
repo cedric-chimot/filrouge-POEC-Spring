@@ -24,7 +24,6 @@ public class FormateurController {
      * Constructeur
      * @param formateurServiceImpl retourne le service formateur
      */
-    @Autowired
     public FormateurController(FormateurServiceImpl formateurServiceImpl) {
         this.formateurServiceImpl = formateurServiceImpl;
     }

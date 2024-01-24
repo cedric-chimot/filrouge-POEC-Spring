@@ -5,18 +5,26 @@ import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.repository.FormateurRepository;
 import com.fr.cch.filrouge.services.AllServices;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service pour implémenter les méthodes du CRUD pour un formateur
+ */
 @Service
 @Transactional
 public class FormateurServiceImpl implements AllServices<Formateur, Long> {
 
+    /**
+     * Le repository du formateur
+     */
     private final FormateurRepository formateurRepository;
 
-    @Autowired
+    /**
+     * Le constructeur du service
+     * @param formateurRepository le repository correspondant
+     */
     public FormateurServiceImpl(FormateurRepository formateurRepository) {
         this.formateurRepository = formateurRepository;
     }
@@ -35,7 +43,11 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
      */
     @Override
     public Formateur findById(Long id) {
-        return formateurRepository.findById(id).orElse(null);
+        Formateur formateur = formateurRepository.findById(id).orElse(null);
+        if (formateur == null) {
+            throw new CustomException("Formateur", "id", id);
+        }
+        return formateur;
     }
 
     /**
@@ -49,6 +61,7 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
 
     /**
      * @param formateur l'objet formateur à mettre à jour
+     * @return le formateur mis à jour
      */
     @Override
     public Formateur update(Formateur formateur) {

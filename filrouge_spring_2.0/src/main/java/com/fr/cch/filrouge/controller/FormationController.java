@@ -2,7 +2,6 @@ package com.fr.cch.filrouge.controller;
 
 import com.fr.cch.filrouge.entity.Formation;
 import com.fr.cch.filrouge.services.impl.FormationServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,7 +23,6 @@ public class FormationController {
      * Constructeur du controller Formation
      * @param formationServiceImpl le service de la formation
      */
-    @Autowired
     public FormationController(FormationServiceImpl formationServiceImpl) {
         this.formationServiceImpl = formationServiceImpl;
     }

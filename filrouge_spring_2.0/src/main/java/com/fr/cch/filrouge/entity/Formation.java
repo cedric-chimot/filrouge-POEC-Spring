@@ -3,6 +3,7 @@ package com.fr.cch.filrouge.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,10 +32,10 @@ public class Formation {
     private String description;
 
     @OneToMany(mappedBy = "formation", fetch = FetchType.EAGER)
-    private List<SessionFormation> sessionsFormation;
+    private List<SessionFormation> sessionsFormation = new ArrayList<>();
 
     @OneToMany(mappedBy = "formations", fetch = FetchType.EAGER)
-    private List<FormationSousThemes> formationSousThemes;
+    private List<FormationSousThemes> formationSousThemes = new ArrayList<>();
 
     /**
      * Constructeur pour une formation

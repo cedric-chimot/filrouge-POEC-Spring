@@ -4,6 +4,7 @@ import com.fr.cch.filrouge.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -18,8 +19,8 @@ import java.util.StringJoiner;
 @DiscriminatorValue("S")
 public class Stagiaire extends Users {
 
-    @OneToMany(mappedBy = "user")
-    private List<Participation> participations;
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Participation> participations = new ArrayList<>();
 
     /**
      * Constructeur d'un stagiaire

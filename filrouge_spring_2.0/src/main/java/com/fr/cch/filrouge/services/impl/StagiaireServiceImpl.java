@@ -8,13 +8,22 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+/**
+ * Service pour implémenter les méthodes du CRUD pour un stagiaire
+ */
 @Service
 @Transactional
 public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
 
+    /**
+     * Le repository du stagiaire
+     */
     private final StagiaireRepository stagiaireRepository;
 
+    /**
+     * Le constructeur du service
+     * @param stagiaireRepository le repository correspondant
+     */
     public StagiaireServiceImpl(StagiaireRepository stagiaireRepository) {
         this.stagiaireRepository = stagiaireRepository;
     }

@@ -9,12 +9,22 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Service pour implémenter les méthodes du CRUD pour une session de formation
+ */
 @Service
 @Transactional
 public class SessionFormationServiceImpl implements AllServices<SessionFormation, Long> {
 
+    /**
+     * Le repository de la session de formation
+     */
     private final SessionFormationRepository sessionFormationRepository;
 
+    /**
+     * Le constructeur du service
+     * @param sessionFormationRepository le repository correspondant
+     */
     public SessionFormationServiceImpl(SessionFormationRepository sessionFormationRepository) {
         this.sessionFormationRepository = sessionFormationRepository;
     }

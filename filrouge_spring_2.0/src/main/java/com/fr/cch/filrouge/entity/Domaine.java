@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
@@ -30,8 +31,8 @@ public class Domaine {
     @Column(name = "nomDomaine", nullable = false)
     private String domaine;
 
-    @OneToMany(mappedBy = "domaine")
-    private List<DomaineTheme> domaineThemes;
+    @OneToMany(mappedBy = "domaine", fetch = FetchType.EAGER)
+    private List<DomaineTheme> domaineThemes = new ArrayList<>();
 
     /**
      * Constructeur d'un domaine

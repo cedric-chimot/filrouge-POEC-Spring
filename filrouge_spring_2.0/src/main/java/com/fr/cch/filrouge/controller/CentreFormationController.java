@@ -24,7 +24,6 @@ public class CentreFormationController {
      * Constructeur du controller centre de formation
      * @param centreFormationService, le service centre de formation
      */
-    @Autowired
     public CentreFormationController(CentreFormationServiceImpl centreFormationService) {
         this.centreFormationService = centreFormationService;
     }

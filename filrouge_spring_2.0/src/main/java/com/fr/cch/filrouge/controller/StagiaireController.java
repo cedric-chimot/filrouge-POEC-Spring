@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class StagiaireController {
 
     /**
-     * Appelle le service Stagiaires
+     * Appelle le service du stagiaire
      */
     public final StagiaireServiceImpl stagiaireServiceImpl;
 
     /**
      * Constructeur
-     * @param stagiaireServiceImpl le service Stagiaires
+     * @param stagiaireServiceImpl le service Stagiaire
      */
-    @Autowired
     public StagiaireController(StagiaireServiceImpl stagiaireServiceImpl) {
         this.stagiaireServiceImpl = stagiaireServiceImpl;
     }
