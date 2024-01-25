@@ -1,10 +1,14 @@
 package com.fr.cch.filrouge.services.impl;
 
 import com.fr.cch.filrouge.entity.Stagiaire;
+import com.fr.cch.filrouge.entity.Users;
 import com.fr.cch.filrouge.exceptions.CustomException;
+import com.fr.cch.filrouge.exceptions.ExistException;
 import com.fr.cch.filrouge.repository.StagiaireRepository;
 import com.fr.cch.filrouge.services.AllServices;
+import com.fr.cch.filrouge.services.UsersService;
 import jakarta.transaction.Transactional;
+import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +24,15 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
      */
     private final StagiaireRepository stagiaireRepository;
 
+    private final UsersService usersService;
+
     /**
      * Le constructeur du service
      * @param stagiaireRepository le repository correspondant
      */
-    public StagiaireServiceImpl(StagiaireRepository stagiaireRepository) {
+    public StagiaireServiceImpl(StagiaireRepository stagiaireRepository, UsersService usersService) {
         this.stagiaireRepository = stagiaireRepository;
+        this.usersService = usersService;
     }
 
     /**
@@ -51,7 +58,14 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
      */
     @Override
     public Stagiaire create(Stagiaire newObj) {
-        return stagiaireRepository.save(newObj);
+        String mdp = newObj.getMdp();
+        String email = newObj.getEmail();
+        if (emailExist(email)) {
+            throw new ExistException("Stagiaire", "email", email);
+        } else {
+            newObj.setMdp(usersService.hashMdp(mdp));
+            return stagiaireRepository.save(newObj);
+        }
     }
 
     /**
@@ -78,6 +92,10 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
         }
         stagiaireRepository.deleteById(id);
         return stagiaire;
+    }
+
+    public boolean emailExist(String email) {
+        return stagiaireRepository.isEmailExist(email);
     }
 
 }
