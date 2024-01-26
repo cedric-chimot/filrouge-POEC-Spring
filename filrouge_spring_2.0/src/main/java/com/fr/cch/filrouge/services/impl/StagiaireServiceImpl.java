@@ -5,9 +5,11 @@ import com.fr.cch.filrouge.entity.Users;
 import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.exceptions.ExistException;
 import com.fr.cch.filrouge.repository.StagiaireRepository;
+import com.fr.cch.filrouge.repository.UsersRepository;
 import com.fr.cch.filrouge.services.AllServices;
 import com.fr.cch.filrouge.services.UsersService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.constraints.Email;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
@@ -53,19 +55,21 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
     }
 
     /**
+     * Méthode de création d'un nouveau stagiaire
      * @param newObj le nouvel objet stagiaire
      * @return le stagiaire nouvellement créé
      */
     @Override
     public Stagiaire create(Stagiaire newObj) {
-        String mdp = newObj.getMdp();
         String email = newObj.getEmail();
-        if (emailExist(email)) {
-            throw new ExistException("Stagiaire", "email", email);
+        Stagiaire newStagiaire;
+        if (usersService.isEmailExist(email) && email != null) {
+            throw new ExistException("User", "email", email);
         } else {
-            newObj.setMdp(usersService.hashMdp(mdp));
-            return stagiaireRepository.save(newObj);
+            newStagiaire = new Stagiaire(newObj.getNom(), newObj.getPrenom(), newObj.getTelephone(),
+                    email, newObj.getPseudo(), usersService.hashMdp(newObj.getMdp()), newObj.getRole());
         }
+        return stagiaireRepository.save(newStagiaire);
     }
 
     /**
@@ -92,10 +96,6 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
         }
         stagiaireRepository.deleteById(id);
         return stagiaire;
-    }
-
-    public boolean emailExist(String email) {
-        return stagiaireRepository.isEmailExist(email);
     }
 
 }

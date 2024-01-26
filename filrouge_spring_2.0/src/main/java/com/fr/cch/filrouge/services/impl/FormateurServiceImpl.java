@@ -2,8 +2,11 @@ package com.fr.cch.filrouge.services.impl;
 
 import com.fr.cch.filrouge.entity.Formateur;
 import com.fr.cch.filrouge.exceptions.CustomException;
+import com.fr.cch.filrouge.exceptions.ExistException;
 import com.fr.cch.filrouge.repository.FormateurRepository;
+import com.fr.cch.filrouge.repository.UsersRepository;
 import com.fr.cch.filrouge.services.AllServices;
+import com.fr.cch.filrouge.services.UsersService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +24,15 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
      */
     private final FormateurRepository formateurRepository;
 
+    private final UsersService usersService;
+
     /**
      * Le constructeur du service
      * @param formateurRepository le repository correspondant
      */
-    public FormateurServiceImpl(FormateurRepository formateurRepository) {
+    public FormateurServiceImpl(FormateurRepository formateurRepository, UsersService usersService) {
         this.formateurRepository = formateurRepository;
+        this.usersService = usersService;
     }
 
     /**
@@ -56,7 +62,15 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
      */
     @Override
     public Formateur create(Formateur newObj) {
-        return formateurRepository.save(newObj);
+        String email = newObj.getEmail();
+        Formateur newFormateur;
+        if (usersService.isEmailExist(email) && email != null) {
+            throw new ExistException("User", "email", email);
+        } else {
+            newFormateur = new Formateur(newObj.getNom(), newObj.getPrenom(), newObj.getTelephone(), email,
+                    newObj.getPseudo(), usersService.hashMdp(newObj.getMdp()), newObj.getRole(),0.0);
+        }
+        return formateurRepository.save(newFormateur);
     }
 
     /**

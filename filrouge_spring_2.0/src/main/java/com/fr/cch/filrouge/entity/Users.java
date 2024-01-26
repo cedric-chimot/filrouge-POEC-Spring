@@ -2,6 +2,7 @@ package com.fr.cch.filrouge.entity;
 
 import com.fr.cch.filrouge.enums.UserRole;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -34,6 +35,7 @@ public abstract class Users {
     @Column(name = "telephone", nullable = false)
     private String telephone;
 
+    @Email
     @Column(name = "email", nullable = false)
     private String email;
 
