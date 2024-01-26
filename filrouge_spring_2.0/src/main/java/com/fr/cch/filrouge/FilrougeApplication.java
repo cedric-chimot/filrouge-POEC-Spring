@@ -23,7 +23,6 @@ public class FilrougeApplication {
 	private static CentreFormationServiceImpl centreFormationService;
 	private static FormationServiceImpl formationService;
 
-	@Autowired
 	public FilrougeApplication(
 			FormateurServiceImpl formateurService,
 			CentreFormationServiceImpl centreFormationService,
@@ -43,7 +42,7 @@ public class FilrougeApplication {
 		formateurService.create(formateur);
 		System.out.println(formateur);
 
-		Stagiaire stagiaire = new Stagiaire("Chimot", "Cedric", "01/01/01/01/01",  "cedric02@hotmail.fr",
+		Stagiaire stagiaire = new Stagiaire("Chimot", "Cedric", "01/01/01/01/01",  "cedric02@hotmail.com",
 				"ced02830", "ced02830", UserRole.CANDIDAT);
 		stagiaireService.create(stagiaire);
 		System.out.println(stagiaire);
