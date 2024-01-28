@@ -53,7 +53,7 @@ public abstract class Users {
      * Constructeur d'un utilisateur
      * @param nom, som nom
      * @param prenom, son prénom
-     * @param telephone, sont téléphone
+     * @param telephone, son téléphone
      * @param email, son email,
      * @param pseudo, son pseudo
      * @param mdp, son mot de passe

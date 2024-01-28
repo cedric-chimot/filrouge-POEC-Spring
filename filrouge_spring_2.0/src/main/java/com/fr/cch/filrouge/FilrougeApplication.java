@@ -9,7 +9,6 @@ import com.fr.cch.filrouge.services.impl.CentreFormationServiceImpl;
 import com.fr.cch.filrouge.services.impl.FormateurServiceImpl;
 import com.fr.cch.filrouge.services.impl.FormationServiceImpl;
 import com.fr.cch.filrouge.services.impl.StagiaireServiceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

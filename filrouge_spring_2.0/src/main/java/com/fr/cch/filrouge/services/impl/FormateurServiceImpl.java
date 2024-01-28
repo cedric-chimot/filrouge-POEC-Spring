@@ -68,7 +68,7 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
             throw new ExistException("User", "email", email);
         } else {
             newFormateur = new Formateur(newObj.getNom(), newObj.getPrenom(), newObj.getTelephone(), email,
-                    newObj.getPseudo(), usersService.hashMdp(newObj.getMdp()), newObj.getRole(),0.0);
+                    newObj.getPseudo(), usersService.hashMdp(newObj.getMdp()), newObj.getRole(), newObj.getNoteMoyenne());
         }
         return formateurRepository.save(newFormateur);
     }

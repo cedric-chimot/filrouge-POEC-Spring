@@ -1,16 +1,12 @@
 package com.fr.cch.filrouge.services.impl;
 
 import com.fr.cch.filrouge.entity.Stagiaire;
-import com.fr.cch.filrouge.entity.Users;
 import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.exceptions.ExistException;
 import com.fr.cch.filrouge.repository.StagiaireRepository;
-import com.fr.cch.filrouge.repository.UsersRepository;
 import com.fr.cch.filrouge.services.AllServices;
 import com.fr.cch.filrouge.services.UsersService;
 import jakarta.transaction.Transactional;
-import jakarta.validation.constraints.Email;
-import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -64,6 +60,7 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
         String email = newObj.getEmail();
         Stagiaire newStagiaire;
         if (usersService.isEmailExist(email) && email != null) {
+            System.out.println("Email existant");
             throw new ExistException("User", "email", email);
         } else {
             newStagiaire = new Stagiaire(newObj.getNom(), newObj.getPrenom(), newObj.getTelephone(),
