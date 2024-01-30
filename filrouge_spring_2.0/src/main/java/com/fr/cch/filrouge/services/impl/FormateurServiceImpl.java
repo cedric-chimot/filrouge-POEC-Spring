@@ -1,6 +1,7 @@
 package com.fr.cch.filrouge.services.impl;
 
 import com.fr.cch.filrouge.entity.Formateur;
+import com.fr.cch.filrouge.entity.Stagiaire;
 import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.exceptions.ExistException;
 import com.fr.cch.filrouge.repository.FormateurRepository;
@@ -8,6 +9,7 @@ import com.fr.cch.filrouge.repository.UsersRepository;
 import com.fr.cch.filrouge.services.AllServices;
 import com.fr.cch.filrouge.services.UsersService;
 import jakarta.transaction.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,13 +28,16 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
 
     private final UsersService usersService;
 
+    private final JdbcTemplate jdbcTemplate;
+
     /**
      * Le constructeur du service
      * @param formateurRepository le repository correspondant
      */
-    public FormateurServiceImpl(FormateurRepository formateurRepository, UsersService usersService) {
+    public FormateurServiceImpl(FormateurRepository formateurRepository, UsersService usersService, JdbcTemplate jdbcTemplate) {
         this.formateurRepository = formateurRepository;
         this.usersService = usersService;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
@@ -74,15 +79,19 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
     }
 
     /**
+     * Méthode pour mettre à jour un formateur
      * @param formateur l'objet formateur à mettre à jour
      * @return le formateur mis à jour
      */
     @Override
     public Formateur update(Formateur formateur) {
-        if (!formateurRepository.existsById(formateur.getId())) {
-            throw new CustomException("Formateur", "id", formateur.getId());
+        if (formateur.getId() != null) {
+            jdbcTemplate.update("UPDATE users SET note_moyenne = ? WHERE id_user = ?",
+                    formateur.getNoteMoyenne(), formateur.getId());
+            formateurRepository.save(formateur);
+        } else {
+            throw new CustomException("Formateur", "id", "L'identifiant du formateur n'existe pas !");
         }
-        formateurRepository.save(formateur);
         return formateur;
     }
 

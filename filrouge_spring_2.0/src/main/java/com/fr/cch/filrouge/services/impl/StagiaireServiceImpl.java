@@ -7,6 +7,7 @@ import com.fr.cch.filrouge.repository.StagiaireRepository;
 import com.fr.cch.filrouge.services.AllServices;
 import com.fr.cch.filrouge.services.UsersService;
 import jakarta.transaction.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,13 +25,16 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
 
     private final UsersService usersService;
 
+    private final JdbcTemplate jdbcTemplate;
+
     /**
      * Le constructeur du service
      * @param stagiaireRepository le repository correspondant
      */
-    public StagiaireServiceImpl(StagiaireRepository stagiaireRepository, UsersService usersService) {
+    public StagiaireServiceImpl(StagiaireRepository stagiaireRepository, UsersService usersService, JdbcTemplate jdbcTemplate) {
         this.stagiaireRepository = stagiaireRepository;
         this.usersService = usersService;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
@@ -74,10 +78,13 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
      */
     @Override
     public Stagiaire update(Stagiaire stagiaire) {
-        if (!stagiaireRepository.existsById(stagiaire.getId())) {
-            throw new CustomException("Stagiaire", "id", stagiaire.getId());
+        if (stagiaire.getId() != null) {
+            jdbcTemplate.update("UPDATE users SET role = ? WHERE id_user = ?",
+                    stagiaire.getRole(), stagiaire.getId());
+            stagiaireRepository.save(stagiaire);
+        } else {
+            throw new CustomException("Stagiaire", "id", "L'identifiant du stagiaire n'existe pas !");
         }
-        stagiaireRepository.save(stagiaire);
         return stagiaire;
     }
 
