@@ -51,7 +51,8 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
      */
     @Override
     public Stagiaire findById(Long id) {
-        return stagiaireRepository.findById(id).orElse(null);
+        return stagiaireRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Stagiaire", "id", id));
     }
 
     /**
@@ -83,7 +84,7 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
                     stagiaire.getRole(), stagiaire.getId());
             stagiaireRepository.save(stagiaire);
         } else {
-            throw new CustomException("Stagiaire", "id", "L'identifiant du stagiaire n'existe pas !");
+            throw new CustomException("Stagiaire", "id", "Identifiant inconnu !");
         }
         return stagiaire;
     }
@@ -93,13 +94,18 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
      * @return le stagiaire à supprimer
      */
     @Override
-    public Stagiaire delete(Long id) {
+    public Stagiaire deleteById(Long id) {
         Stagiaire stagiaire = findById(id);
-        if (stagiaire == null) {
-            throw new CustomException("Stagiaire", "id", id);
-        }
         stagiaireRepository.deleteById(id);
         return stagiaire;
+    }
+
+    /**
+     * Méthode pour supprimer tous les stagiaires
+     */
+    @Override
+    public void deleteAll() {
+        stagiaireRepository.deleteAll();
     }
 
 }

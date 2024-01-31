@@ -2,6 +2,7 @@ package com.fr.cch.filrouge.controller;
 
 import com.fr.cch.filrouge.entity.Formateur;
 import com.fr.cch.filrouge.services.impl.FormateurServiceImpl;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,7 +35,7 @@ public class FormateurController {
      * @return le formateur nouvellement créé
      */
     @PostMapping("/create")
-    public Formateur createFormateur(@RequestBody Formateur formateur) {
+    public Formateur createFormateur(@Valid @RequestBody Formateur formateur) {
         return formateurServiceImpl.create(formateur);
     }
 

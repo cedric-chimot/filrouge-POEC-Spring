@@ -36,5 +36,10 @@ public interface AllServices<TypeObj, PK> {
      * @param id l'identifiant recherché
      * @return l'objet à supprimer
      */
-    TypeObj delete(PK id);
+    TypeObj deleteById(PK id);
+
+    /**
+     * Méthode pour supprimer tous les objets
+     */
+    void deleteAll();
 }

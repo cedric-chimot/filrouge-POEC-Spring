@@ -26,8 +26,14 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
      */
     private final FormateurRepository formateurRepository;
 
+    /**
+     * Appel du service Users
+     */
     private final UsersService usersService;
 
+    /**
+     * API pour gérer les opérations sur la BDD
+     */
     private final JdbcTemplate jdbcTemplate;
 
     /**
@@ -54,11 +60,8 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
      */
     @Override
     public Formateur findById(Long id) {
-        Formateur formateur = formateurRepository.findById(id).orElse(null);
-        if (formateur == null) {
-            throw new CustomException("Formateur", "id", id);
-        }
-        return formateur;
+        return formateurRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Stagiaire", "id", id));
     }
 
     /**
@@ -90,7 +93,7 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
                     formateur.getNoteMoyenne(), formateur.getId());
             formateurRepository.save(formateur);
         } else {
-            throw new CustomException("Formateur", "id", "L'identifiant du formateur n'existe pas !");
+            throw new CustomException("Formateur", "id", "Identifiant inconnu !");
         }
         return formateur;
     }
@@ -100,13 +103,18 @@ public class FormateurServiceImpl implements AllServices<Formateur, Long> {
      * @return le formateur à supprimer
      */
     @Override
-    public Formateur delete(Long id) {
+    public Formateur deleteById(Long id) {
         Formateur formateur = findById(id);
-        if (formateur == null) {
-            throw new CustomException("Formateur", "id", id);
-        }
         formateurRepository.deleteById(id);
         return formateur;
+    }
+
+    /**
+     * Méthode pour supprimer tous les formateurs
+     */
+    @Override
+    public void deleteAll() {
+        formateurRepository.deleteAll();
     }
 
 }

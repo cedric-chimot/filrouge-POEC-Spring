@@ -2,6 +2,8 @@ package com.fr.cch.filrouge.controller;
 
 import com.fr.cch.filrouge.entity.Stagiaire;
 import com.fr.cch.filrouge.services.impl.StagiaireServiceImpl;
+import jakarta.validation.Valid;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -31,7 +33,7 @@ public class StagiaireController {
      * @return le stagiaire nouvellement créé
      */
     @PostMapping("/create")
-    public Stagiaire createStagiaire(@RequestBody Stagiaire stagiaire) {
+    public Stagiaire createStagiaire(@Valid @RequestBody Stagiaire stagiaire) {
         return stagiaireServiceImpl.create(stagiaire);
     }
 

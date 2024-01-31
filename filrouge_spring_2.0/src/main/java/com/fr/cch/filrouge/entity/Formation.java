@@ -19,7 +19,7 @@ public class Formation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JoinColumn(name = "idFormations")
+    @JoinColumn(name = "idFormation")
     private Long id;
 
     @Column(name = "nomFormation", nullable = false)

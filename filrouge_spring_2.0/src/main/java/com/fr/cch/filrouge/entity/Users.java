@@ -3,6 +3,8 @@ package com.fr.cch.filrouge.entity;
 import com.fr.cch.filrouge.enums.UserRole;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -42,6 +44,9 @@ public abstract class Users {
     @Column(name = "pseudo", nullable = false)
     private String pseudo;
 
+    @Size(min = 8, message = "Le mot de passe doit avoir au minimum 8 caractères")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$",
+            message = "Le mot de passe doit contenir 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial")
     @Column(name = "mdp", nullable = false)
     private String mdp;
 

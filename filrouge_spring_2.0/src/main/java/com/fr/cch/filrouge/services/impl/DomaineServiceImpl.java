@@ -43,11 +43,8 @@ public class DomaineServiceImpl implements AllServices<Domaine, Long> {
      */
     @Override
     public Domaine findById(Long id) {
-        Domaine domaine = domaineRepository.findById(id).orElse(null);
-        if (domaine == null) {
-            throw new CustomException("Domaine", "id", id);
-        }
-        return domaine;
+        return domaineRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Domaine", "id", id));
     }
 
     /**
@@ -73,16 +70,22 @@ public class DomaineServiceImpl implements AllServices<Domaine, Long> {
     }
 
     /**
+     * Méthode pour supprimer un domaine selon l'id recherché
      * @param id l'identifiant recherché
      * @return le domaine à supprimer
      */
     @Override
-    public Domaine delete(Long id) {
+    public Domaine deleteById(Long id) {
         Domaine domaine = findById(id);
-        if (domaine == null) {
-            throw new CustomException("Domaine", "id", id);
-        }
         domaineRepository.deleteById(id);
         return domaine;
+    }
+
+    /**
+     * Méthode pour supprimer touts les domaines
+     */
+    @Override
+    public void deleteAll() {
+        domaineRepository.deleteAll();
     }
 }

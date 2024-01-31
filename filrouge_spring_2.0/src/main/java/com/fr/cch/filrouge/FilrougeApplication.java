@@ -39,12 +39,12 @@ public class FilrougeApplication {
 		SpringApplication.run(FilrougeApplication.class, args);
 
 		Formateur formateur = new Formateur("Chimot", "Cedric", "01/01/01/01/01",  "cedric02@hotmail.fr",
-				"ced02830", "ced02830", UserRole.FORMATEUR, 4.5 );
+				"ced02830", "Ced@02830", UserRole.FORMATEUR, 4.5 );
 		formateurService.create(formateur);
 		System.out.println(formateur);
 
 		Stagiaire stagiaire = new Stagiaire("Chimot", "Cedric", "01/01/01/01/01",  "cedric02@hotmail.com",
-				"ced02830", "ced02830", UserRole.CANDIDAT);
+				"ced02830", "Ced@02830", UserRole.CANDIDAT);
 		stagiaireService.create(stagiaire);
 		System.out.println(stagiaire);
 

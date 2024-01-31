@@ -5,6 +5,7 @@ import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.repository.FormationRepository;
 import com.fr.cch.filrouge.services.AllServices;
 import jakarta.transaction.Transactional;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,11 +23,17 @@ public class FormationServiceImpl implements AllServices<Formation, Long> {
     private final FormationRepository formationRepository;
 
     /**
+     * API pour gérer les opérations sur la BDD
+     */
+    private final JdbcTemplate jdbcTemplate;
+
+    /**
      * Le constructeur du service
      * @param formationRepository le repository correspondant
      */
-    public FormationServiceImpl(FormationRepository formationRepository) {
+    public FormationServiceImpl(FormationRepository formationRepository, JdbcTemplate jdbcTemplate) {
         this.formationRepository = formationRepository;
+        this.jdbcTemplate = jdbcTemplate;
     }
 
     /**
@@ -44,11 +51,8 @@ public class FormationServiceImpl implements AllServices<Formation, Long> {
      */
     @Override
     public Formation findById(Long id) {
-        Formation formation = formationRepository.findById(id).orElse(null);
-        if(formation == null) {
-            throw new CustomException("Formation", "id", id);
-        }
-        return formation;
+        return formationRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Formation", "id", id));
     }
 
     /**
@@ -67,10 +71,13 @@ public class FormationServiceImpl implements AllServices<Formation, Long> {
      */
     @Override
     public Formation update(Formation formation) {
-        if (!formationRepository.existsById(formation.getId())) {
-            throw new CustomException("Formation", "id", formation.getId());
+        if (formation.getId() != null) {
+            jdbcTemplate.update("UPDATE formation SET nom_formation = ? WHERE id = ?",
+                    formation.getNom(), formation.getId());
+            formationRepository.save(formation);
+        } else {
+            throw new CustomException("Formation", "id", "Identifiant inconnu !");
         }
-        formationRepository.save(formation);
         return formation;
     }
 
@@ -79,12 +86,17 @@ public class FormationServiceImpl implements AllServices<Formation, Long> {
      * @return la formation à supprimer
      */
     @Override
-    public Formation delete(Long id) {
+    public Formation deleteById(Long id) {
         Formation formation = findById(id);
-        if (formation == null) {
-            throw new CustomException("Formation", "id", id);
-        }
         formationRepository.deleteById(id);
         return formation;
+    }
+
+    /**
+     * Méthode pour supprimer toutes les formations
+     */
+    @Override
+    public void deleteAll() {
+        formationRepository.deleteAll();
     }
 }

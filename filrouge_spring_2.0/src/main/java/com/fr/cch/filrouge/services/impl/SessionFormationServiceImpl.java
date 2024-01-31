@@ -43,11 +43,8 @@ public class SessionFormationServiceImpl implements AllServices<SessionFormation
      */
     @Override
     public SessionFormation findById(Long id) {
-        SessionFormation sessionFormation = sessionFormationRepository.findById(id).orElse(null);
-        if (sessionFormation == null) {
-            throw new CustomException("SessionFormation", "id", id);
-        }
-        return sessionFormation;
+        return sessionFormationRepository.findById(id)
+                .orElseThrow(() -> new CustomException("SessionFormation", "id", id));
     }
 
     /**
@@ -60,6 +57,7 @@ public class SessionFormationServiceImpl implements AllServices<SessionFormation
     }
 
     /**
+     * Méthode pour mettre à jour une session de formation selon l'id recherché
      * @param sessionFormation l'objet à mettre à jour
      * @return la session mise à jour
      */
@@ -73,16 +71,23 @@ public class SessionFormationServiceImpl implements AllServices<SessionFormation
     }
 
     /**
+     * Méthode pour supprimer une  session de formation selon l'id recherché
      * @param id l'identifiant recherché
      * @return la session de formation à supprimer
      */
     @Override
-    public SessionFormation delete(Long id) {
+    public SessionFormation deleteById(Long id) {
         SessionFormation sessionFormation = findById(id);
-        if (sessionFormation == null) {
-            throw new CustomException("SessionFormation", "id", id);
-        }
         sessionFormationRepository.deleteById(id);
         return sessionFormation;
     }
+
+    /**
+     * Méthode pour supprimer toutes les sessions de formation
+     */
+    @Override
+    public void deleteAll() {
+        sessionFormationRepository.deleteAll();
+    }
+
 }

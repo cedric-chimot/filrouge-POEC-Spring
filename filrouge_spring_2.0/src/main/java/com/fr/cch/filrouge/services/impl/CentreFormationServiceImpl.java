@@ -44,11 +44,8 @@ public class CentreFormationServiceImpl implements AllServices<CentreFormation, 
      */
     @Override
     public CentreFormation findById(Long id) {
-        CentreFormation centreFormation = centreFormationRepository.findById(id).orElse(null);
-        if (centreFormation == null) {
-            throw new CustomException("CentreFormation", "id", id);
-        }
-        return centreFormation;
+        return centreFormationRepository.findById(id)
+                .orElseThrow(() -> new CustomException("CentreFormation", "id", id));
     }
 
     /**
@@ -74,16 +71,22 @@ public class CentreFormationServiceImpl implements AllServices<CentreFormation, 
     }
 
     /**
+     * Méthode pour supprimer un centre de formation selon l'id recherché
      * @param id l'identifiant recherché
      * @return l'objet à supprimer
      */
     @Override
-    public CentreFormation delete(Long id) {
+    public CentreFormation deleteById(Long id) {
         CentreFormation centreFormation = findById(id);
-        if (centreFormation == null) {
-            throw new CustomException("CentreFormation", "id", id);
-        }
         centreFormationRepository.deleteById(id);
         return centreFormation;
+    }
+
+    /**
+     * Méthode pour supprimer tous les centres de formation
+     */
+    @Override
+    public void deleteAll() {
+        centreFormationRepository.deleteAll();
     }
 }
