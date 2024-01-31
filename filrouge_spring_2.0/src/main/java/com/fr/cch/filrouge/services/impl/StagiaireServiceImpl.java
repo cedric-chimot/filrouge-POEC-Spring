@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
 /**
  * Service pour implémenter les méthodes du CRUD pour un stagiaire
  */

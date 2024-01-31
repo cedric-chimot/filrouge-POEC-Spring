@@ -44,7 +44,9 @@ public abstract class Users {
     @Column(name = "pseudo", nullable = false)
     private String pseudo;
 
+    // Définit la taille minimum du mot de passe
     @Size(min = 8, message = "Le mot de passe doit avoir au minimum 8 caractères")
+    // Définit le format de mot de passe attendu avec une regex
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^&*]).{8,}$",
             message = "Le mot de passe doit contenir 1 majuscule, 1 minuscule, 1 chiffre et 1 caractère spécial")
     @Column(name = "mdp", nullable = false)

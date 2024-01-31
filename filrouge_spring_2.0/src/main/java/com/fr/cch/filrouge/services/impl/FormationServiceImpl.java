@@ -72,8 +72,8 @@ public class FormationServiceImpl implements AllServices<Formation, Long> {
     @Override
     public Formation update(Formation formation) {
         if (formation.getId() != null) {
-            jdbcTemplate.update("UPDATE formation SET nom_formation = ? WHERE id = ?",
-                    formation.getNom(), formation.getId());
+            jdbcTemplate.update("UPDATE formation SET nom_formation = ?, prix = ?, description = ? WHERE id = ?",
+                    formation.getNom(), formation.getPrix(), formation.getDescription(), formation.getId());
             formationRepository.save(formation);
         } else {
             throw new CustomException("Formation", "id", "Identifiant inconnu !");
