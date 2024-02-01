@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
  * Gestion de l'exception IM USED
  */
 @Getter
-@ResponseStatus(value = HttpStatus.IM_USED)
+@ResponseStatus(value = HttpStatus.CONFLICT)
 public class ExistException extends RuntimeException{
     /*
        Variables à gérer lors de l'exception
