@@ -11,3 +11,5 @@ _-	Relations entre les tables, clés étrangères, clés composites_
 _- Intégration de l'API et tests de fonctionnement_
 
 _- Début de l'implémentation du CRUD_
+
+_- Vérification de l'email en cas de doublon_
