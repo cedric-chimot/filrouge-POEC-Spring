@@ -5,6 +5,7 @@ import com.fr.cch.filrouge.repository.UsersRepository;
 import jakarta.transaction.Transactional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 @Transactional
@@ -21,10 +22,11 @@ public class UsersService {
      * Utilise la bibliothèque BCrypt pour générer un sel aléatoire et hacher le mot de passe
      * avant de le stocker dans l'attribut 'mdp'.
      *
-     * @param plainPassword Le mot de passe en clair à hasher et à définir pour l'utilisateur.
+     * @param password Le mot de passe en clair à hasher et à définir pour l'utilisateur.
      */
-    public String hashMdp(String plainPassword) {
-        String hashedPassword = BCrypt.hashpw(plainPassword, BCrypt.gensalt());
+    public String hashMdp(String password) {
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String hashedPassword = passwordEncoder.encode(password);
         System.out.println("Password hashed: " + hashedPassword);
         return hashedPassword;
     }

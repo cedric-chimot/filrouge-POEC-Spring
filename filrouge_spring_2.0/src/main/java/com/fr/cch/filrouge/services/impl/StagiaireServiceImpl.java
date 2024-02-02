@@ -1,5 +1,8 @@
 package com.fr.cch.filrouge.services.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fr.cch.filrouge.dto.StagiaireCompletDTO;
+import com.fr.cch.filrouge.dto.StagiaireReduitDTO;
 import com.fr.cch.filrouge.entity.Stagiaire;
 import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.exceptions.ExistException;
@@ -28,14 +31,18 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
 
     private final JdbcTemplate jdbcTemplate;
 
+    private final ObjectMapper objectMapper;
+
     /**
      * Le constructeur du service
      * @param stagiaireRepository le repository correspondant
      */
-    public StagiaireServiceImpl(StagiaireRepository stagiaireRepository, UsersService usersService, JdbcTemplate jdbcTemplate) {
+    public StagiaireServiceImpl(StagiaireRepository stagiaireRepository, UsersService usersService,
+                                JdbcTemplate jdbcTemplate, ObjectMapper objectMapper) {
         this.stagiaireRepository = stagiaireRepository;
         this.usersService = usersService;
         this.jdbcTemplate = jdbcTemplate;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -47,6 +54,17 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
     }
 
     /**
+     * Méthode pour retourner tous les stagiaires avec les informations choisies
+     * @return la liste des stagiaires
+     */
+    public List<StagiaireReduitDTO> findAllStagiairesReduit() {
+        List<Stagiaire> stagiaires = stagiaireRepository.findAll();
+        return stagiaires.stream()
+                .map(stagiaire -> objectMapper.convertValue(stagiaire, StagiaireReduitDTO.class))
+                .toList();
+    }
+
+    /**
      * @param id l'identifiant recherché
      * @return le stagiaire correspondant
      */
@@ -54,6 +72,17 @@ public class StagiaireServiceImpl implements AllServices<Stagiaire, Long> {
     public Stagiaire findById(Long id) {
         return stagiaireRepository.findById(id)
                 .orElseThrow(() -> new CustomException("Stagiaire", "id", id));
+    }
+
+    /**
+     * Méthode pour trouver un utilisateur selon l'id et afficher certaines de ses informations
+     * @param id l'identifiant du stagiaire
+     * @return le stagiaire trouvé et ses infos
+     */
+    public StagiaireCompletDTO stagiaireById(Long id) {
+        Stagiaire stagiaire = stagiaireRepository.findById(id)
+                .orElseThrow(() -> new CustomException("Stagiaire", "id", id));
+        return objectMapper.convertValue(stagiaire, StagiaireCompletDTO.class);
     }
 
     /**
