@@ -1,11 +1,12 @@
 package com.fr.cch.filrouge.controller;
 
+import com.fr.cch.filrouge.dto.SessionReduitDTO;
 import com.fr.cch.filrouge.entity.SessionFormation;
+import com.fr.cch.filrouge.entity.Stagiaire;
 import com.fr.cch.filrouge.services.impl.SessionFormationServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Controller pour une session de formation
@@ -35,6 +36,54 @@ public class SessionFormationController {
     @PostMapping("/create")
     public SessionFormation createSession(@RequestBody SessionFormation sessionFormation) {
         return sessionFormationService.create(sessionFormation);
+    }
+
+
+    /**
+     * Méthode pour mettre à jour une session de formation
+     * @param sessionFormation la session de formation à mettre à jour
+     * @return la session de formation mis à jour
+     */
+    @PatchMapping("/update")
+    public SessionFormation updateSession(@RequestBody SessionFormation sessionFormation) {
+        return sessionFormationService.update(sessionFormation);
+    }
+
+    /**
+     * Affiche toutes les sessions de formations
+     * @return la liste des sessions formations
+     */
+    @GetMapping("/all")
+    public List<SessionReduitDTO> getAllSessions() {
+        return sessionFormationService.findAllSessionReduit();
+    }
+
+    /**
+     * Méthode pour rechercher une session avec son identifiant
+     * @param id l'identifiant de la session
+     * @return la session recherchée
+     */
+    @GetMapping("/{id}")
+    public SessionFormation getSessionById(@PathVariable Long id) {
+        return sessionFormationService.findById(id);
+    }
+
+    /**
+     * Supprimer une session de formation selon son id
+     * @param id l'identifiant de la session
+     * @return la session supprimée
+     */
+    @DeleteMapping("/delete/{id}")
+    public SessionFormation deleteSessionById(@PathVariable Long id) {
+        return sessionFormationService.deleteById(id);
+    }
+
+    /**
+     * Supprimer toutes les sessions de formation
+     */
+    @DeleteMapping("/delete/all")
+    public void deleteAllSession() {
+        sessionFormationService.deleteAll();
     }
 
 }

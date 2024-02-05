@@ -1,5 +1,9 @@
 package com.fr.cch.filrouge.services.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fr.cch.filrouge.dto.FormationReduitDTO;
+import com.fr.cch.filrouge.dto.SessionReduitDTO;
+import com.fr.cch.filrouge.entity.Formation;
 import com.fr.cch.filrouge.entity.SessionFormation;
 import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.repository.SessionFormationRepository;
@@ -20,13 +24,15 @@ public class SessionFormationServiceImpl implements AllServices<SessionFormation
      * Le repository de la session de formation
      */
     private final SessionFormationRepository sessionFormationRepository;
+    private final ObjectMapper objectMapper;
 
     /**
      * Le constructeur du service
      * @param sessionFormationRepository le repository correspondant
      */
-    public SessionFormationServiceImpl(SessionFormationRepository sessionFormationRepository) {
+    public SessionFormationServiceImpl(SessionFormationRepository sessionFormationRepository, ObjectMapper objectMapper) {
         this.sessionFormationRepository = sessionFormationRepository;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -35,6 +41,18 @@ public class SessionFormationServiceImpl implements AllServices<SessionFormation
     @Override
     public List<SessionFormation> findAll() {
         return sessionFormationRepository.findAll();
+    }
+
+    /**
+     * Méthode pour retourner toutes les formations avec les informations choisies
+     *
+     * @return la liste des formations
+     */
+    public List<SessionReduitDTO> findAllSessionReduit() {
+        List<SessionFormation> sessions = sessionFormationRepository.findAll();
+        return sessions.stream()
+                .map(sessionFormation -> objectMapper.convertValue(sessionFormation, SessionReduitDTO.class))
+                .toList();
     }
 
     /**

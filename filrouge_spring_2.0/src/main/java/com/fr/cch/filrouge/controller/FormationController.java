@@ -1,11 +1,12 @@
 package com.fr.cch.filrouge.controller;
 
+import com.fr.cch.filrouge.dto.FormationReduitDTO;
 import com.fr.cch.filrouge.entity.Formation;
+import com.fr.cch.filrouge.entity.SessionFormation;
 import com.fr.cch.filrouge.services.impl.FormationServiceImpl;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Controller pour une formation
@@ -36,5 +37,52 @@ public class FormationController {
     public Formation createFormation(@RequestBody Formation formation) {
         return formationServiceImpl.create(formation);
     }
+
+    /**
+     * Méthode pour mettre à jour une formation
+     * @param formation la formation à mettre à jour
+     * @return la formation mis à jour
+     */
+    @PatchMapping("/update")
+    public Formation updateFormation(@RequestBody Formation formation) {
+        return formationServiceImpl.update(formation);
+    }
+
+    /**
+     * Affiche toutes les formations
+     * @return la liste des formations
+     */
+    @GetMapping("/all")
+    public List<FormationReduitDTO> getAllFormations() {
+        return formationServiceImpl.findAllFormationReduit();
+    }
+    /**
+     * Méthode pour rechercher une session avec son identifiant
+     * @param id l'identifiant de la session
+     * @return la session recherchée
+     */
+    @GetMapping("/{id}")
+    public Formation getFormationById(@PathVariable Long id) {
+        return formationServiceImpl.findById(id);
+    }
+
+    /**
+     * Supprimer une formation selon son id
+     * @param id l'identifiant de la formation
+     * @return la formation supprimée
+     */
+    @DeleteMapping("/delete/{id}")
+    public Formation deleteFormationById(@PathVariable Long id) {
+        return formationServiceImpl.deleteById(id);
+    }
+
+    /**
+     * Supprimer toutes les formations
+     */
+    @DeleteMapping("/delete/all")
+    public void deleteAllFormation() {
+        formationServiceImpl.deleteAll();
+    }
+
 
 }

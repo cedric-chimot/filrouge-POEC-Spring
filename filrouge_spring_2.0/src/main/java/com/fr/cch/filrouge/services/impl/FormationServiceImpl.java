@@ -1,5 +1,7 @@
 package com.fr.cch.filrouge.services.impl;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fr.cch.filrouge.dto.FormationReduitDTO;
 import com.fr.cch.filrouge.entity.Formation;
 import com.fr.cch.filrouge.exceptions.CustomException;
 import com.fr.cch.filrouge.repository.FormationRepository;
@@ -27,13 +29,16 @@ public class FormationServiceImpl implements AllServices<Formation, Long> {
      */
     private final JdbcTemplate jdbcTemplate;
 
+    private final ObjectMapper objectMapper;
+
     /**
      * Le constructeur du service
      * @param formationRepository le repository correspondant
      */
-    public FormationServiceImpl(FormationRepository formationRepository, JdbcTemplate jdbcTemplate) {
+    public FormationServiceImpl(FormationRepository formationRepository, JdbcTemplate jdbcTemplate, ObjectMapper objectMapper) {
         this.formationRepository = formationRepository;
         this.jdbcTemplate = jdbcTemplate;
+        this.objectMapper = objectMapper;
     }
 
     /**
@@ -42,6 +47,18 @@ public class FormationServiceImpl implements AllServices<Formation, Long> {
     @Override
     public List<Formation> findAll() {
         return formationRepository.findAll();
+    }
+
+    /**
+     * Méthode pour retourner toutes les formations avec les informations choisies
+     *
+     * @return la liste des formations
+     */
+    public List<FormationReduitDTO> findAllFormationReduit() {
+        List<Formation> formations = formationRepository.findAll();
+        return formations.stream()
+                .map(formation -> objectMapper.convertValue(formation, FormationReduitDTO.class))
+                .toList();
     }
 
     /**
