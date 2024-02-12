@@ -60,7 +60,7 @@ public class UserController {
      * @return le stagiaire recherché
      */
     @GetMapping("/{id}")
-    public Users getStagiaireById(@PathVariable Long id) {
+    public Users getUserById(@PathVariable Long id) {
         return usersService.findById(id);
     }
 
