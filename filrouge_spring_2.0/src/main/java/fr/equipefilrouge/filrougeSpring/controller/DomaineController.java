@@ -1,7 +1,7 @@
 package fr.equipefilrouge.filrougeSpring.controller;
 
-import com.fr.cch.filrouge.entity.Domaine;
-import com.fr.cch.filrouge.services.impl.DomaineServiceImpl;
+import fr.equipefilrouge.filrougeSpring.entity.Domaine;
+import fr.equipefilrouge.filrougeSpring.services.impl.DomaineServiceImpl;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;

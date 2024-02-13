@@ -3,9 +3,10 @@ package fr.equipefilrouge.filrougeSpring.dto;
 import lombok.Data;
 
 @Data
-public class StagiaireReduitDTO {
+public class UserStagiaireDTO {
     private Long id;
     private String nom;
     private String prenom;
-    private String pseudo;
+    private String telephone;
+    private String email;
 }

@@ -16,11 +16,19 @@ public interface UsersRepository extends JpaRepository<Users, Long> {
     Users findByEmail(@Param("email") String email);
 
     /**
+     * Requête pour compter le nombre de user par rôle
+     * @param role le role de 'utilisateur
+     * @return le nombre d'utilisateurs trouvés
+     */
+    @Query("SELECT COUNT(DISTINCT u) FROM Users u WHERE :role IN (u.role)")
+    Long countByRole(@Param("role") UserRole role);
+
+    /**
      * Requête pour trouver un user par son rôle
      * @param role le role de 'utilisateur
      * @return l'utilisateur trouvé
      */
-    @Query("SELECT COUNT(DISTINCT u) FROM Users u WHERE :role IN (u.role)")
-    Long countByRole(@Param("role") UserRole role);
+    @Query("SELECT u FROM Users u WHERE u.role = :role")
+    Users findByRole(@Param("role") UserRole role);
 
 }
